@@ -105,13 +105,10 @@
                 }
             }
 
-            var selectedListDIV = document.getElementById('selected');
-            selectedListDIV.innerHTML = generateSelectedGrid(heros);
-            selectedListDIV.innerHTML += generateSelectedGrid(weapons);
+            refreshSelectionList()
         }
 
         function addItemToList(item, type, itemType) {
-            var selectedListDIV = document.getElementById('selected');
             if (type === "hero") {
                 var index = heros.findIndex((i)=> {
                     return i.name == item;
@@ -140,6 +137,11 @@
                 }
             }
 
+            refreshSelectionList()
+        }
+
+        function refreshSelectionList() {
+            var selectedListDIV = document.getElementById('selected');
             selectedListDIV.innerHTML = generateSelectedGrid(heros);
             selectedListDIV.innerHTML += generateSelectedGrid(weapons);
             selectedListDIV.innerHTML += '<br/><br/><br/>'
