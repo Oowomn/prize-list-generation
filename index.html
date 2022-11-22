@@ -1,1 +1,22 @@
-Hello
+<html>
+    <script>
+        function getDataJSON() {
+            fetch('https://oowomn.github.io/prize-list-generation/fullprize', {})
+            .then( (response) => {
+                var listDIV = document.getElementById('list');
+                listDIV.innerHTML = "json data: <br/>" + response;
+            }).catch( () => {
+                var listDIV = document.getElementById('list');
+                listDIV.innerHTML = "Sorry, something went wrong";
+            })
+        }
+    </script>
+    <body>
+        Hello
+
+        <div id="list">
+            Loading.....
+        </div>
+    </body>
+    
+</html>
