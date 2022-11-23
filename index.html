@@ -7,7 +7,7 @@
     var heros = [];
     var weapons = [];
     function getDataJSON() {
-        fetch('https://oowomn.github.io/prize-list-generation/fullprize.json', {})
+        fetch('https://oowomn.github.io/prize-list-generation/fullprize.json', { cache: "no-store"})
             .then((response) => response.json())
             .then((data) => {
                 heros = data.heros.map((i) => {
@@ -28,11 +28,20 @@
                     }
                 })
 
+                var countries = data.countries;
+
                 var listDIV = document.getElementById('list');
-                var heroList = geranteItemGrid(heros);
-                var weaponList = geranteItemGrid(weapons);
-                listDIV.innerHTML = heroList;
-                listDIV.innerHTML += weaponList;
+                listDIV.innerHTML = "";
+                countries.forEach((c) => {
+                    var countryHeros = c.heros.map((i) => {
+                        return {
+                            "name": i,
+                            "type": "hero"
+                        }
+                    })
+                    listDIV.innerHTML += geranteItemGrid(countryHeros, c.name)
+                })
+                listDIV.innerHTML += geranteItemGrid(weapons, "神兵");
             })
             .catch((error) => {
                 console.log(error);
@@ -41,8 +50,8 @@
             })
     }
 
-    function geranteItemGrid(items) {
-        var htmlString = '<div class="container text-center"><div class="row row-cols-4">';
+    function geranteItemGrid(items, title) {
+        var htmlString = '<div class="container text-center"><h1>'+ title +'</h1><div class="row row-cols-4">';
         items.forEach(element => {
             htmlString += '<div class="col list-group-item border">' + element.name
             htmlString += '<button class="btn btn-primary" onclick="addItemToList(\'' + element.name + '\', \'' + element.type + '\', \'whole\')">完整</>'
